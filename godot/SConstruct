@@ -1,9 +1,7 @@
 import os
-import sys
-import subprocess
 
 # Import the SCons environment
-env = DefaultEnvironment()
+Import('env')
 
 # Define paths for source files and build
 src_dir = 'src'
