@@ -1,15 +1,39 @@
 import os
 
-# Import the SCons environment
-Import('env')
+# Create the SCons environment
+def create_env():
+    env = Environment(
+        tools=['default', 'clang'],
+        CXXFLAGS=['-std=c++17', '-stdlib=libc++'],
+        CPPDEFINES=['GODOT_EXPORT']
+    )
+    
+    # Add include paths
+    godot_cpp_dir = os.path.abspath('godot-cpp/include')
+    env.Append(CPPPATH=[godot_cpp_dir])
 
-# Define paths for source files and build
+    # Link libraries
+    env.Append(LIBPATH=[os.path.abspath('godot-cpp/bin')])
+    
+    return env
+
+# Create the environment
+env = create_env()
+
+# Define the source directory and output directory
 src_dir = 'src'
 build_dir = 'bin'
 
-# Add source files to the build environment
-env.add_source_files(src_dir, '*.cpp')
-env.add_source_files(src_dir, '*.mm')
+# Ensure the output directory exists
+if not os.path.exists(build_dir):
+    os.makedirs(build_dir)
 
-# Define the output directory
-env.Program(target=build_dir + '/youtubedl_ios_plugin', source=Glob(src_dir + '/*.cpp'))
+# Define source files
+source_files = Glob(os.path.join(src_dir, '*.[cm]pp'))
+
+# Build the shared library
+env.SharedLibrary(target=os.path.join(build_dir, 'libyoutubedl_ios_plugin'), source=source_files)
+
+# Print out the final build status
+print('Build complete. Output in:', build_dir)
+
