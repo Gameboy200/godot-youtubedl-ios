@@ -1,0 +1,8 @@
+Import('env')
+
+env.Append(CPPPATH=['#src', '#godot-cpp'])
+
+env.module_add_files('src/youtubedl_ios_plugin.cpp')
+env.module_add_files('src/register_types.cpp')
+
+env.Append(LINKFLAGS=['-ObjC', '-framework', 'YoutubeDL'])

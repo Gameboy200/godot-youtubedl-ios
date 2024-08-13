@@ -1,0 +1,44 @@
+# .github/workflows/build.yml
+name: Build iOS Plugin
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        brew update
+        brew install carthage
+
+    - name: Install Godot
+      run: |
+        wget https://downloads.tuxfamily.org/godotengine/4.2.2/Godot_v4.2.2-stable_macos.universal.zip
+        unzip Godot_v4.2.2-stable_macos.universal.zip -d ~/godot
+
+    - name: Install YoutubeDL-iOS
+      run: |
+        cd godot
+        carthage update --platform iOS
+
+    - name: Build the plugin
+      run: |
+        cd godot
+        scons platform=ios target=release
+
+    - name: Archive build
+      uses: actions/upload-artifact@v3
+      with:
+        name: youtubedl-ios-plugin
+        path: bin/

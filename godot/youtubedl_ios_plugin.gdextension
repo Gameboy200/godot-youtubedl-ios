@@ -1,0 +1,14 @@
+{
+    "entry_symbol": "initialize_youtubedl_ios_plugin",
+    "deps": ["godot-cpp"],
+    "library": {
+        "macos": {
+            "debug": "bin/libyoutubedl_ios_plugin.dylib",
+            "release": "bin/libyoutubedl_ios_plugin.dylib"
+        },
+        "ios": {
+            "debug": "bin/libyoutubedl_ios_plugin.dylib",
+            "release": "bin/libyoutubedl_ios_plugin.dylib"
+        }
+    }
+}

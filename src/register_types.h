@@ -1,0 +1,2 @@
+void initialize_youtubedl_ios_plugin(ModuleInitializationLevel p_level);
+void uninitialize_youtubedl_ios_plugin(ModuleInitializationLevel p_level);
